@@ -3,7 +3,7 @@ pub mod abi;
 use abi::{command_request::RequestData, *};
 use http::StatusCode;
 
-// use crate::KvError;
+use crate::KvError;
 
 impl CommandRequest {
     /// 创建 HGET 命令
@@ -95,22 +95,22 @@ impl From<Vec<Kvpair>> for CommandResponse {
     }
 }
 
-//  从 KvError 转换成 CommandResponse
-// impl From<KvError> for CommandResponse {
-//     fn from(e: KvError) -> Self {
-//         let mut result = Self {
-//             status: StatusCode::INTERNAL_SERVER_ERROR.as_u16() as _,
-//             message: e.to_string(),
-//             values: vec![],
-//             pairs: vec![],
-//         };
+///  从 KvError 转换成 CommandResponse
+impl From<KvError> for CommandResponse {
+    fn from(e: KvError) -> Self {
+        let mut result = Self {
+            status: StatusCode::INTERNAL_SERVER_ERROR.as_u16() as _,
+            message: e.to_string(),
+            values: vec![],
+            pairs: vec![],
+        };
 
-//         match e {
-//             KvError::NotFound(_, _) => result.status = StatusCode::NOT_FOUND.as_u16() as _,
-//             KvError::InvalidCommand(_) => result.status = StatusCode::BAD_REQUEST.as_u16() as _,
-//             _ => {}
-//         }
+        match e {
+            KvError::NotFound(_, _) => result.status = StatusCode::NOT_FOUND.as_u16() as _,
+            KvError::InvalidCommand(_) => result.status = StatusCode::BAD_REQUEST.as_u16() as _,
+            _ => {}
+        }
 
-//         result
-//     }
-// }
+        result
+    }
+}

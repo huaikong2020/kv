@@ -6,3 +6,6 @@ pub use storage::*;
 
 mod error;
 pub use error::*;
+
+mod service;
+pub use service::*;
