@@ -114,3 +114,10 @@ impl From<KvError> for CommandResponse {
         result
     }
 }
+
+/// 从(string,value)转换成kvpair
+impl From<(String, Value)> for Kvpair {
+    fn from(t: (String, Value)) -> Self {
+        Kvpair::new(t.0, t.1)
+    }
+}
